@@ -1,5 +1,6 @@
 import express from "express";
 import authRouter from "./routes/authRouter";
+import orderRouter from "./routes/orderRouter";
 import dotenv from "dotenv";
 import "./config/db";
 
@@ -15,6 +16,7 @@ class App {
 
   routes() {
     this.app.use("/api/auth", authRouter);
+    this.app.use("/api/orders", orderRouter);
   }
 
   middleware() {
