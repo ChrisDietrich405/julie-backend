@@ -1,5 +1,4 @@
 import { Entity, ObjectIdColumn, Column } from "typeorm";
-import Customer from "../models/Customer";
 import DeliveryAddress from "./DeliveryAddress";
 
 @Entity()
@@ -11,7 +10,7 @@ export default class Order {
   status: string;
 
   @Column()
-  totalProducts: number;
+  totalCost: number;
 
   @Column()
   quantity: number;
@@ -25,8 +24,8 @@ export default class Order {
   @Column()
   deliveryCost: number;
 
-  @Column((type) => Customer)
-  customer: Customer;
+  @Column()
+  customer: Object;
   //this represents the one to one relationship
 
   @Column((type) => DeliveryAddress)
@@ -34,15 +33,15 @@ export default class Order {
 
   constructor(
     status: string,
-    totalProducts: number,
+    totalCost: number,
     total: number,
     quantity: number,
     deliveryCost: number,
-    customer: Customer,
+    customer: Object,
     deliveryAddress: DeliveryAddress
   ) {
     this.status = status;
-    this.totalProducts = totalProducts;
+    this.totalCost = totalCost;
     this.total = total;
     this.quantity = quantity;
     this.deliveryCost = deliveryCost;
