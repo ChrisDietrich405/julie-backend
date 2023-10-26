@@ -3,6 +3,11 @@ import Order from "../entities/Order";
 import Customer from "../entities/Customer";
 import DeliveryAddress from "../entities/DeliveryAddress";
 import AppDataSource from "../config/db";
+import { CustomRequest } from "../interfaces/userId";
+
+// interface CustomRequest extends Request {
+//   user: { id: number; isAdmin: boolean };
+// }
 
 class OrderController {
   async save(req: Request, res: Response) {
@@ -69,8 +74,16 @@ class OrderController {
     return res.status(200).json(orderResponse);
   }
 
-  async findOrderByCustomerId() {
+  async findOrderByCustomerId(req: CustomRequest, res: Response) {
+    console.log(req.loggedInUser);
 
+    const userRepository = AppDataSource.getRepository(Customer)
+    const user = await userRepository.findOneBy({
+    id: req.loggedInUser?.id})
+
+    const findOrder = await AppDataSource.manager.findOne(Order, {
+      customer.id: req.loggedInUser.id,
+    });
   }
 }
 

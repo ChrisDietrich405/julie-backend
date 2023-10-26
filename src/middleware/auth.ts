@@ -1,9 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-
-interface CustomRequest extends Request {
-  user: { id: number; isAdmin: boolean };
-}
+import { CustomRequest } from "../interfaces/userId";
 
 interface JwtPayload {
   id: number;
@@ -11,7 +8,7 @@ interface JwtPayload {
 }
 
 class Auth {
-  async validation(req: Request, res: Response, next: NextFunction) {
+  async validation(req: CustomRequest, res: Response, next: NextFunction) {
     let token = req.headers.authorization?.replace("Bearer ", "");
 
     if (!token) {
@@ -23,9 +20,9 @@ class Auth {
       process.env.JWT_SECRET as string
     ) as JwtPayload;
 
-    (req as CustomRequest).user = { id, isAdmin };
+    req.loggedInUser = { id, isAdmin };
     next();
   }
 }
 
-export default new Auth()
+export default Auth;

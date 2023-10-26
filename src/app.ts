@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 import "./config/db";
 
 dotenv.config();
-
 class App {
   app; //app is a variable and is also considered a field inside a class
   constructor() {
